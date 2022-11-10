@@ -65,14 +65,16 @@ function createItemCategorySelect(catagories) {
     catagories.forEach((category, index) => {
         let amount = shopItems.filter((item) => item.category === category).length;
 
-        const labelEL = El.createElement("label", `form-check mb-2 custom-control-label`);
-        const inputEl = El.createElement("input", `form-check-input category-${index + 1} `);
+        const labelEL = El.createElement("label", `form-check mb-2`);
+        const inputEl = El.createElement("input", `form-check-input category-${index + 1}`);
         const spanEl = El.createElement("span", "form-check-label");
         const badgeEl = El.createElement("b", "badge rounded-pill bubble-bg float-end");
 
         inputEl.type = "checkbox";
+        inputEl.id = `category-${index + 1}`;
         spanEl.innerHTML = category;
         badgeEl.innerText = amount;
+        labelEL.htmlFor = `category-${index + 1}`;
 
         labelEL.appendChild(inputEl);
         labelEL.appendChild(spanEl);
@@ -144,7 +146,6 @@ function removeInfiniteScroll() {
 
 function filters() {
     categorySelectEl.addEventListener("click", (e) => {
-        e.preventDefault();
         if (e.target.classList.contains("form-check-input")) {
             let category = e.target.nextElementSibling.innerText;
 

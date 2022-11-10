@@ -81,13 +81,6 @@ h5.card-title {
     height: 3vh;
 }
 
-.custom-control-label:before{
-    background-color: red;
-}
-.custom-checkbox .custom-control-input:checked~.custom-control-label::before{
-    background-color: black;
-}
-
 @media (min-width: 1025px) {
     .h-custom {
     height: 100vh !important;
@@ -109,7 +102,6 @@ input::-webkit-inner-spin-button {
     z-index: 1;
 }
 
-input[type="checkbox"]:checked {
+input[type=checkbox]:checked {
     background-color: #00ABB3;
-    border-color: #00ABB3;
 }
