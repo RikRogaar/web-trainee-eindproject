@@ -7,7 +7,6 @@ const restoreBtnEl = document.querySelector('#restoreBtn');
 const clearCartBtnEl = document.querySelector('#clearCartBtn');
 
 let shopItems = JSON.parse(localStorage.getItem('shopItems'));
-console.log((shopItems));
 
 shopItems.forEach((item) => {
     createInfo(item);
