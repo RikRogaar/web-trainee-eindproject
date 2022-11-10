@@ -7,10 +7,6 @@ const restoreBtnEl = document.querySelector('#restoreBtn');
 const clearCartBtnEl = document.querySelector('#clearCartBtn');
 
 let shopItems = JSON.parse(localStorage.getItem('shopItems'));
-<<<<<<< HEAD
-=======
-let bootstrap;
->>>>>>> ece66b580751906ddb2ad041c6b8ed7365ba33ca
 
 shopItems.forEach((item) => {
     createInfo(item);
@@ -83,7 +79,6 @@ function createModal(item) {
 
     modalSaveBtnEl.addEventListener('click', () => {
         validateEditForm(item);
-        // saveChanges(item);
     });
 
     // form
@@ -173,8 +168,8 @@ function saveChanges(item) {
         rating: item.rating,
     };
 
-    const modal = document.getElementById(`staticBackdrop${item.id}`);
-    const modalInstance = bootstrap.Modal.getInstance(modal);
+    const modalEl = document.getElementById(`staticBackdrop${item.id}`);
+    const modalInstance = bootstrap.Modal.getInstance(modalEl);
     modalInstance.hide();
 
     const index = shopItems.findIndex((el) => el.id === item.id);
@@ -278,14 +273,13 @@ function createAddModal() {
     imgGroup4El.appendChild(imgLabel4El);
     imgGroup4El.appendChild(imgInputEl);
 
-    modalTitleEl.innerText = 'Add new item';
 
     modalAddBtnEl.addEventListener('click', (e) => {
         e.preventDefault();
         validateAddForm();
     });
 
-    modalTitleEl.innerText = 'Edit item';
+    modalTitleEl.innerText = 'Add new item';
     modalCloseBtnEl.setAttribute('type', 'button');
     modalCloseBtnEl.setAttribute('data-bs-dismiss', 'modal');
     modalCloseBtnEl.setAttribute('aria-label', 'Close');
@@ -293,7 +287,7 @@ function createAddModal() {
     modalCloseBtn2El.setAttribute('data-bs-dismiss', 'modal');
     modalCloseBtn2El.innerText = 'Close';
     modalAddBtnEl.setAttribute('type', 'button');
-    modalAddBtnEl.innerText = 'Save changes';
+    modalAddBtnEl.innerText = 'Add item';
 
     modalHeaderEl.appendChild(modalTitleEl);
     modalHeaderEl.appendChild(modalCloseBtnEl);
@@ -421,9 +415,7 @@ function validateAddForm() {
         }
     } else if (priceGroupEl.querySelector('.error')) {
         priceGroupEl.querySelector('.error').remove();
-    }
-
-    if (Number.isNaN(price) || (price.split('.')[1] && price.split('.')[1].length > 2)) {
+    } else if (isNaN(price) || (price.split('.')[1] && price.split('.')[1].length > 2)) {
         if (!priceGroupEl.querySelector('.error')) {
             const errorEl = El.createElement('div', 'error text-danger');
             errorEl.innerText = 'Please enter a valid price';
