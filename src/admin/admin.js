@@ -7,7 +7,7 @@ const restoreBtnEl = document.querySelector('#restoreBtn');
 const clearCartBtnEl = document.querySelector('#clearCartBtn');
 
 let shopItems = JSON.parse(localStorage.getItem('shopItems'));
-console.log((shopItems));
+let bootstrap;
 
 shopItems.forEach((item) => {
     createInfo(item);
@@ -131,7 +131,6 @@ function createModal(item) {
     imageGroup4El.appendChild(imageLabel4El);
     imageGroup4El.appendChild(imageInputEl);
 
-    //modal
     modalTitleEl.innerText = 'Edit item';
     modalCloseBtnEl.setAttribute('type', 'button');
     modalCloseBtnEl.setAttribute('data-bs-dismiss', 'modal');
@@ -171,19 +170,15 @@ function saveChanges(item) {
         rating: item.rating,
     };
 
-    //close modal
     const modal = document.getElementById(`staticBackdrop${item.id}`);
     const modalInstance = bootstrap.Modal.getInstance(modal);
     modalInstance.hide();
 
-    //update item and table
-    let shopItems = JSON.parse(localStorage.getItem('shopItems'));
     const index = shopItems.findIndex((el) => el.id === item.id);
     shopItems[index] = newItem;
     localStorage.setItem('shopItems', JSON.stringify(shopItems));
     updateTable();
 
-    // update cart
     let cartItems = JSON.parse(localStorage.getItem('cart'));
     if (cartItems) {
         cartItems.forEach((el, i) => {
@@ -194,7 +189,6 @@ function saveChanges(item) {
         localStorage.setItem('cart', JSON.stringify(cartItems));
     }
 
-    //show alert
     const alertEl = El.createElement('div', 'alert alert-success alert-dismissible fade show');
     alertEl.setAttribute('role', 'alert');
     alertEl.innerText = 'Item updated successfully';
@@ -207,12 +201,11 @@ function saveChanges(item) {
 
     setTimeout(() => {
         alertEl.remove();
-    }
-    , 3000);
+    }, 3000);
 }
 
 function updateTable() {
-    const shopItems = JSON.parse(localStorage.getItem('shopItems'));
+    shopItems = JSON.parse(localStorage.getItem('shopItems'));
     const tableBodyEl = document.querySelector('.t-body');
     tableBodyEl.innerHTML = '';
     shopItems.forEach((item) => {
@@ -221,101 +214,96 @@ function updateTable() {
 }
 
 function createAddModal() {
-        // modal
-        const modalEl = El.createElement('div', `modal fade`);
-        modalEl.setAttribute('id', `staticBackdropAdd`);
-        modalEl.setAttribute('data-bs-backdrop', 'static');
-        modalEl.setAttribute('data-bs-keyboard', 'false');
-        modalEl.setAttribute('tabindex', '-1');
-        modalEl.setAttribute('aria-labelledby', 'staticBackdropLabel');
-        modalEl.setAttribute('aria-hidden', 'true');
-        const modalDialogEl = El.createElement('div', 'modal-dialog');
-        const modalContentEl = El.createElement('div', 'modal-content');
-        const modalHeaderEl = El.createElement('div', 'modal-header');
-        const modalTitleEl = El.createElement('h1', 'modal-title fs-5 text-dark');
-        const modalCloseBtnEl = El.createElement('button', 'btn-close');
-        const modalBodyEl = El.createElement('div', 'modal-body');
-        const modalFooterEl = El.createElement('div', 'modal-footer');
-        const modalCloseBtn2El = El.createElement('button', 'btn btn-secondary');
-        const modalAddBtnEl = El.createElement('button', 'btn btn-color');
+    const modalEl = El.createElement('div', `modal fade`);
+    modalEl.setAttribute('id', `staticBackdropAdd`);
+    modalEl.setAttribute('data-bs-backdrop', 'static');
+    modalEl.setAttribute('data-bs-keyboard', 'false');
+    modalEl.setAttribute('tabindex', '-1');
+    modalEl.setAttribute('aria-labelledby', 'staticBackdropLabel');
+    modalEl.setAttribute('aria-hidden', 'true');
+    const modalDialogEl = El.createElement('div', 'modal-dialog');
+    const modalContentEl = El.createElement('div', 'modal-content');
+    const modalHeaderEl = El.createElement('div', 'modal-header');
+    const modalTitleEl = El.createElement('h1', 'modal-title fs-5 text-dark');
+    const modalCloseBtnEl = El.createElement('button', 'btn-close');
+    const modalBodyEl = El.createElement('div', 'modal-body');
+    const modalFooterEl = El.createElement('div', 'modal-footer');
+    const modalCloseBtn2El = El.createElement('button', 'btn btn-secondary');
+    const modalAddBtnEl = El.createElement('button', 'btn btn-color');
 
-        // form
-        const formEl = El.createElement('form', 'text-dark');
-        const categoryGroup1El = El.createElement('div', 'mb-3 category-group');
-        const categoryLabel1El = El.createElement('label', 'form-label');
-        const categoryInputEl = El.createElement('input', 'form-control');
-        const nameGroup2El = El.createElement('div', 'mb-3 name-group');
-        const nameLabel2El = El.createElement('label', 'form-label');
-        const nameInputEl = El.createElement('input', 'form-control');
-        const priceGroup3El = El.createElement('div', 'mb-3 price-group');
-        const priceLabel3El = El.createElement('label', 'form-label');
-        const priceInputEl = El.createElement('input', 'form-control');
-        const imgGroup4El = El.createElement('div', 'mb-3 img-group');
-        const imgLabel4El = El.createElement('label', 'form-label');
-        const imgInputEl = El.createElement('input', 'form-control');
+    const formEl = El.createElement('form', 'text-dark');
+    const categoryGroup1El = El.createElement('div', 'mb-3 category-group');
+    const categoryLabel1El = El.createElement('label', 'form-label');
+    const categoryInputEl = El.createElement('input', 'form-control');
+    const nameGroup2El = El.createElement('div', 'mb-3 name-group');
+    const nameLabel2El = El.createElement('label', 'form-label');
+    const nameInputEl = El.createElement('input', 'form-control');
+    const priceGroup3El = El.createElement('div', 'mb-3 price-group');
+    const priceLabel3El = El.createElement('label', 'form-label');
+    const priceInputEl = El.createElement('input', 'form-control');
+    const imgGroup4El = El.createElement('div', 'mb-3 img-group');
+    const imgLabel4El = El.createElement('label', 'form-label');
+    const imgInputEl = El.createElement('input', 'form-control');
 
-        categoryLabel1El.innerText = 'Category';
-        categoryInputEl.setAttribute('type', 'text');
-        categoryInputEl.setAttribute('id', `categoryAdd`);
-        categoryInputEl.setAttribute('value', '');
+    categoryLabel1El.innerText = 'Category';
+    categoryInputEl.setAttribute('type', 'text');
+    categoryInputEl.setAttribute('id', `categoryAdd`);
+    categoryInputEl.setAttribute('value', '');
 
-        nameLabel2El.innerText = 'Name';
-        nameInputEl.setAttribute('type', 'text');
-        nameInputEl.setAttribute('id', `nameAdd`);
+    nameLabel2El.innerText = 'Name';
+    nameInputEl.setAttribute('type', 'text');
+    nameInputEl.setAttribute('id', `nameAdd`);
 
-        priceLabel3El.innerText = 'Price';
-        priceInputEl.setAttribute('type', 'text');
-        priceInputEl.setAttribute('id', `priceAdd`);
+    priceLabel3El.innerText = 'Price';
+    priceInputEl.setAttribute('type', 'text');
+    priceInputEl.setAttribute('id', `priceAdd`);
 
-        imgLabel4El.innerText = 'Image';
-        imgInputEl.setAttribute('type', 'text');
-        imgInputEl.setAttribute('id', `imgAdd`);
+    imgLabel4El.innerText = 'Image';
+    imgInputEl.setAttribute('type', 'text');
+    imgInputEl.setAttribute('id', `imgAdd`);
 
-        formEl.appendChild(categoryGroup1El);
-        categoryGroup1El.appendChild(categoryLabel1El);
-        categoryGroup1El.appendChild(categoryInputEl);
-        formEl.appendChild(nameGroup2El);
-        nameGroup2El.appendChild(nameLabel2El);
-        nameGroup2El.appendChild(nameInputEl);
-        formEl.appendChild(priceGroup3El);
-        priceGroup3El.appendChild(priceLabel3El);
-        priceGroup3El.appendChild(priceInputEl);
-        formEl.appendChild(imgGroup4El);
-        imgGroup4El.appendChild(imgLabel4El);
-        imgGroup4El.appendChild(imgInputEl);
+    formEl.appendChild(categoryGroup1El);
+    categoryGroup1El.appendChild(categoryLabel1El);
+    categoryGroup1El.appendChild(categoryInputEl);
+    formEl.appendChild(nameGroup2El);
+    nameGroup2El.appendChild(nameLabel2El);
+    nameGroup2El.appendChild(nameInputEl);
+    formEl.appendChild(priceGroup3El);
+    priceGroup3El.appendChild(priceLabel3El);
+    priceGroup3El.appendChild(priceInputEl);
+    formEl.appendChild(imgGroup4El);
+    imgGroup4El.appendChild(imgLabel4El);
+    imgGroup4El.appendChild(imgInputEl);
 
-        modalTitleEl.innerText = 'Add new item';
+    modalTitleEl.innerText = 'Add new item';
 
-        modalAddBtnEl.addEventListener('click', (e) => {
-            e.preventDefault();
-            validateAddForm();
-            // addItem();
-        });
+    modalAddBtnEl.addEventListener('click', (e) => {
+        e.preventDefault();
+        validateAddForm();
+    });
 
-        //modal
-        modalTitleEl.innerText = 'Edit item';
-        modalCloseBtnEl.setAttribute('type', 'button');
-        modalCloseBtnEl.setAttribute('data-bs-dismiss', 'modal');
-        modalCloseBtnEl.setAttribute('aria-label', 'Close');
-        modalCloseBtn2El.setAttribute('type', 'button');
-        modalCloseBtn2El.setAttribute('data-bs-dismiss', 'modal');
-        modalCloseBtn2El.innerText = 'Close';
-        modalAddBtnEl.setAttribute('type', 'button');
-        modalAddBtnEl.innerText = 'Save changes';
+    modalTitleEl.innerText = 'Edit item';
+    modalCloseBtnEl.setAttribute('type', 'button');
+    modalCloseBtnEl.setAttribute('data-bs-dismiss', 'modal');
+    modalCloseBtnEl.setAttribute('aria-label', 'Close');
+    modalCloseBtn2El.setAttribute('type', 'button');
+    modalCloseBtn2El.setAttribute('data-bs-dismiss', 'modal');
+    modalCloseBtn2El.innerText = 'Close';
+    modalAddBtnEl.setAttribute('type', 'button');
+    modalAddBtnEl.innerText = 'Save changes';
 
-        modalHeaderEl.appendChild(modalTitleEl);
-        modalHeaderEl.appendChild(modalCloseBtnEl);
-        modalFooterEl.appendChild(modalCloseBtn2El);
-        modalFooterEl.appendChild(modalAddBtnEl);
-        modalContentEl.appendChild(modalHeaderEl);
-        modalContentEl.appendChild(modalBodyEl);
-        modalContentEl.appendChild(modalFooterEl);
-        modalDialogEl.appendChild(modalContentEl);
-        modalEl.appendChild(modalDialogEl);
-        modalBodyEl.appendChild(formEl);
+    modalHeaderEl.appendChild(modalTitleEl);
+    modalHeaderEl.appendChild(modalCloseBtnEl);
+    modalFooterEl.appendChild(modalCloseBtn2El);
+    modalFooterEl.appendChild(modalAddBtnEl);
+    modalContentEl.appendChild(modalHeaderEl);
+    modalContentEl.appendChild(modalBodyEl);
+    modalContentEl.appendChild(modalFooterEl);
+    modalDialogEl.appendChild(modalContentEl);
+    modalEl.appendChild(modalDialogEl);
+    modalBodyEl.appendChild(formEl);
 
-        addBtnEl.appendChild(modalEl);
-
+    addBtnEl.appendChild(modalEl);
 }
 
 function addItem() {
@@ -330,18 +318,14 @@ function addItem() {
         title: name,
         price: Number(price),
         image: image,
-        // description: item.description,
         category: category,
-        // rating: item.rating,
     };
 
-    //close modal
     const modal = document.getElementById(`staticBackdropAdd`);
     const modalInstance = bootstrap.Modal.getInstance(modal);
     modalInstance.hide();
 
-    //update item and table
-    let shopItems = JSON.parse(localStorage.getItem('shopItems'));
+    shopItems = JSON.parse(localStorage.getItem('shopItems'));
     shopItems.push(newItem);
     localStorage.setItem('shopItems', JSON.stringify(shopItems));
     updateTable();
@@ -350,7 +334,7 @@ function addItem() {
 }
 
 function deleteItem(item) {
-    let shopItems = JSON.parse(localStorage.getItem('shopItems'));
+    shopItems = JSON.parse(localStorage.getItem('shopItems'));
     shopItems = shopItems.filter((i) => i.id !== item.id);
     localStorage.setItem('shopItems', JSON.stringify(shopItems));
     updateTable();
@@ -360,13 +344,13 @@ function deleteItem(item) {
     localStorage.setItem('cart', JSON.stringify(cartItems));
 
     alert('Item deleted successfully');
-
 }
 
 function alert(text) {
-    const alertEl = El.createElement('div', 'alert alert-success alert-dismissible fade show position-sticky top-0 z-index-1');
+    const alertEl = El.createElement('div',
+        'alert alert-success alert-dismissible fade show position-sticky top-0 z-index-1');
     alertEl.setAttribute('role', 'alert');
-    alertEl.innerText =  `${text}`;
+    alertEl.innerText = `${text}`;
     const alertBtnEl = El.createElement('button', 'btn-close');
     alertBtnEl.setAttribute('type', 'button');
     alertBtnEl.setAttribute('data-bs-dismiss', 'alert');
@@ -376,8 +360,7 @@ function alert(text) {
 
     setTimeout(() => {
         alertEl.remove();
-    }
-    , 3000);
+    }, 3000);
 }
 
 async function getItemData() {
@@ -413,10 +396,8 @@ function validateAddForm() {
             errorEl.innerText = 'Please select a category';
             categoryGroupEl.appendChild(errorEl);
         }
-    } else {
-        if (categoryGroupEl.querySelector('.error')) {
-            categoryGroupEl.querySelector('.error').remove();
-        }
+    } else if (categoryGroupEl.querySelector('.error')) {
+        categoryGroupEl.querySelector('.error').remove();
     }
 
     if (name === '') {
@@ -425,10 +406,8 @@ function validateAddForm() {
             errorEl.innerText = 'Please enter a name';
             nameGroupEl.appendChild(errorEl);
         }
-    } else {
-        if (nameGroupEl.querySelector('.error')) {
-            nameGroupEl.querySelector('.error').remove();
-        }
+    } else if (nameGroupEl.querySelector('.error')) {
+        nameGroupEl.querySelector('.error').remove();
     }
 
     if (price === '') {
@@ -437,23 +416,18 @@ function validateAddForm() {
             errorEl.innerText = 'Please enter a price';
             priceGroupEl.appendChild(errorEl);
         }
-    } else {
-        if (priceGroupEl.querySelector('.error')) {
-            priceGroupEl.querySelector('.error').remove();
-        }
+    } else if (priceGroupEl.querySelector('.error')) {
+        priceGroupEl.querySelector('.error').remove();
+    }
 
-        if (isNaN(price) || (price.split('.')[1] && price.split('.')[1].length > 2)) {
-            if (!priceGroupEl.querySelector('.error')) {
-                const errorEl = El.createElement('div', 'error text-danger');
-
-                errorEl.innerText = 'Please enter a valid price';
-                priceGroupEl.appendChild(errorEl);
-            }
-        } else {
-            if (priceGroupEl.querySelector('.error')) {
-                priceGroupEl.querySelector('.error').remove();
-            }
+    if (Number.isNaN(price) || (price.split('.')[1] && price.split('.')[1].length > 2)) {
+        if (!priceGroupEl.querySelector('.error')) {
+            const errorEl = El.createElement('div', 'error text-danger');
+            errorEl.innerText = 'Please enter a valid price';
+            priceGroupEl.appendChild(errorEl);
         }
+    } else if (priceGroupEl.querySelector('.error')) {
+        priceGroupEl.querySelector('.error').remove();
     }
 
     if (image === '') {
@@ -462,13 +436,12 @@ function validateAddForm() {
             errorEl.innerText = 'Please enter an image url';
             imgGroupEl.appendChild(errorEl);
         }
-    } else {
-        if (imgGroupEl.querySelector('.error')) {
-            imgGroupEl.querySelector('.error').remove();
-        }
+    } else if (imgGroupEl.querySelector('.error')) {
+        imgGroupEl.querySelector('.error').remove();
     }
 
-    if (!categoryGroupEl.querySelector('.error') && !nameGroupEl.querySelector('.error') && !priceGroupEl.querySelector('.error') && !imgGroupEl.querySelector('.error')) {
+    if (!categoryGroupEl.querySelector('.error') && !nameGroupEl.querySelector('.error')
+        && !priceGroupEl.querySelector('.error') && !imgGroupEl.querySelector('.error')) {
         addItem();
     }
 }
@@ -489,11 +462,10 @@ function validateEditForm(item) {
             errorEl.innerText = 'Please select a category';
             categoryGroupEl.appendChild(errorEl);
         }
-    } else {
-        if (categoryGroupEl.querySelector('.error')) {
-            categoryGroupEl.querySelector('.error').remove();
-        }
+    } else if (categoryGroupEl.querySelector('.error')) {
+        categoryGroupEl.querySelector('.error').remove();
     }
+
 
     if (name === '') {
         if (!nameGroupEl.querySelector('.error')) {
@@ -501,10 +473,8 @@ function validateEditForm(item) {
             errorEl.innerText = 'Please enter a name';
             nameGroupEl.appendChild(errorEl);
         }
-    } else {
-        if (nameGroupEl.querySelector('.error')) {
-            nameGroupEl.querySelector('.error').remove();
-        }
+    } else if (nameGroupEl.querySelector('.error')) {
+        nameGroupEl.querySelector('.error').remove();
     }
 
     if (price === '') {
@@ -513,23 +483,19 @@ function validateEditForm(item) {
             errorEl.innerText = 'Please enter a price';
             priceGroupEl.appendChild(errorEl);
         }
-    } else {
-        if (priceGroupEl.querySelector('.error')) {
-            priceGroupEl.querySelector('.error').remove();
-        }
+    } else if (priceGroupEl.querySelector('.error')) {
+        priceGroupEl.querySelector('.error').remove();
+    }
 
-        if (isNaN(price) || (price.split('.')[1] && price.split('.')[1].length > 2)) {
-            if (!priceGroupEl.querySelector('.error')) {
-                const errorEl = El.createElement('div', 'error text-danger');
+    if (Number.isNaN(price) || (price.split('.')[1] && price.split('.')[1].length > 2)) {
+        if (!priceGroupEl.querySelector('.error')) {
+            const errorEl = El.createElement('div', 'error text-danger');
 
-                errorEl.innerText = 'Please enter a valid price';
-                priceGroupEl.appendChild(errorEl);
-            }
-        } else {
-            if (priceGroupEl.querySelector('.error')) {
-                priceGroupEl.querySelector('.error').remove();
-            }
+            errorEl.innerText = 'Please enter a valid price';
+            priceGroupEl.appendChild(errorEl);
         }
+    } else if (priceGroupEl.querySelector('.error')) {
+        priceGroupEl.querySelector('.error').remove();
     }
 
     if (image === '') {
@@ -538,13 +504,12 @@ function validateEditForm(item) {
             errorEl.innerText = 'Please enter an image url';
             imgGroupEl.appendChild(errorEl);
         }
-    } else {
-        if (imgGroupEl.querySelector('.error')) {
-            imgGroupEl.querySelector('.error').remove();
-        }
+    } else if (imgGroupEl.querySelector('.error')) {
+        imgGroupEl.querySelector('.error').remove();
     }
 
-    if (!categoryGroupEl.querySelector('.error') && !nameGroupEl.querySelector('.error') && !priceGroupEl.querySelector('.error') && !imgGroupEl.querySelector('.error')) {
+    if (!categoryGroupEl.querySelector('.error') && !nameGroupEl.querySelector('.error')
+        && !priceGroupEl.querySelector('.error') && !imgGroupEl.querySelector('.error')) {
         saveChanges(item);
     }
 }

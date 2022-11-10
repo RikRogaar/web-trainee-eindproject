@@ -54,12 +54,10 @@ async function show() {
     filters();
 
     showCartCount();
-
-
 }
 
 
-async function save(){
+async function save() {
     window.localStorage.setItem("shopItems", JSON.stringify(shopItems));
 }
 
@@ -88,8 +86,8 @@ function showItemsFound() {
     itemsFoundEl.innerHTML = `${shopItems.length} items found`;
 }
 
-function findCategories(shopItems) {
-    shopItems.forEach((shopItem) => {
+function findCategories(shopItemsCategories) {
+    shopItemsCategories.forEach((shopItem) => {
         if (!categories.includes(shopItem.category)) {
             categories.push(shopItem.category);
         }
@@ -104,10 +102,10 @@ function throttle(callback, time) {
     throttleTimer = true;
 
     setTimeout(() => {
-      callback();
-      throttleTimer = false;
+        callback();
+        throttleTimer = false;
     }, time);
-};
+}
 
 function addCards(pageIndex) {
     currentPage = pageIndex;
@@ -119,9 +117,8 @@ function addCards(pageIndex) {
     cardTotalEl.innerText = shopItems.length;
 
     for (let i = startRange + 1; i <= endRange; i++) {
-            Card.createCard(shopItems[i]);
+        Card.createCard(shopItems[i]);
     }
-
 }
 
 function handleInfiniteScroll() {
@@ -130,29 +127,28 @@ function handleInfiniteScroll() {
           window.innerHeight + window.pageYOffset >= document.body.offsetHeight;
 
         if (endOfPage) {
-          addCards(currentPage + 1);
+            addCards(currentPage + 1);
         }
 
         if (currentPage === pageCount) {
-          removeInfiniteScroll();
+            removeInfiniteScroll();
         }
-      }, 1000);
+    }, 1000);
 }
 
 function removeInfiniteScroll() {
+    let loader;
     loader.remove();
     window.removeEventListener("scroll", handleInfiniteScroll);
-};
+}
 
 function filters() {
-
     categorySelectEl.addEventListener("click", (e) => {
+        e.preventDefault();
         if (e.target.classList.contains("form-check-input")) {
             let category = e.target.nextElementSibling.innerText;
 
-            let filtered = shopItems.filter((item) => {
-                return item.category === category;
-            });
+            let filtered = shopItems.filter((item) => { return item.category === category; });
 
             rowEl.innerHTML = "";
             filtered.forEach((item) => {
@@ -177,8 +173,6 @@ function filters() {
             e.target.checked = true;
         }
     });
-
-
 }
 
 function showCartCount() {

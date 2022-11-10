@@ -15,7 +15,7 @@ class CartLogic {
 
     removeOne(id) {
         let cart = JSON.parse(localStorage.getItem("cart"));
-        const item = cart.find((item) => item.id === id);
+        let item = cart.find((cartItem) => cartItem.id === id);
         const index = cart.indexOf(item);
 
         cart.splice(index, 1);
@@ -113,8 +113,8 @@ class CartLogic {
             return;
         }
 
-        cart.forEach((cartItem) => {
-            order.push(cartItem);
+        cart.forEach((itemCart) => {
+            order.push(itemCart);
         });
 
         localStorage.setItem("order", JSON.stringify(order));
@@ -127,16 +127,16 @@ class CartLogic {
         localStorage.setItem("cart", JSON.stringify([]));
 
         setTimeout(() => {
-            location.href = "../products/products.html";
-        }
-        , 2000);
+            window.location.href = "../products/products.html";
+        }, 2000);
     }
 
     alert(text) {
         const containerEl = document.querySelector(".top-container");
-        const alertEl = El.createElement('div', 'alert alert-success alert-dismissible fade show position-sticky top-0 z-index-1');
+        const alertEl = El.createElement('div',
+            'alert alert-success alert-dismissible fade show position-sticky top-0 z-index-1');
         alertEl.setAttribute('role', 'alert');
-        alertEl.innerText =  `${text}`;
+        alertEl.innerText = `${text}`;
         const alertBtnEl = El.createElement('button', 'btn-close');
         alertBtnEl.setAttribute('type', 'button');
         alertBtnEl.setAttribute('data-bs-dismiss', 'alert');
@@ -146,8 +146,7 @@ class CartLogic {
 
         setTimeout(() => {
             alertEl.remove();
-        }
-        , 3000);
+        }, 3000);
     }
 }
 

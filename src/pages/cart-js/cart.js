@@ -17,13 +17,12 @@ function setup() {
     });
 
     showCartCount();
-
 }
 
-function setupCards(cart) {
+function setupCards(cartData) {
     let cartItems = new Map();
 
-    cart.forEach((cartItem) => {
+    cartData.forEach((cartItem) => {
         if (cartItems.has(cartItem.id)) {
             cartItems.set(cartItem.id, cartItems.get(cartItem.id) + 1);
         } else {
@@ -65,7 +64,7 @@ function createCard(itemObj, cartItemCount) {
     minusIcon.style.color = "#b0d5fa";
     minusBtn.addEventListener("click", () => {
         CartLogic.removeOne(itemObj.id, shopItems);
-        location.reload();
+        window.location.reload();
     });
     inputEl.min = 0;
     inputEl.name = "quantity";
@@ -76,14 +75,14 @@ function createCard(itemObj, cartItemCount) {
     plusIcon.style.color = "#b0d5fa";
     plusBtn.addEventListener("click", () => {
         CartLogic.addOne(itemObj.id, shopItems);
-        location.reload();
+        window.location.reload();
     });
     priceEl.innerText = itemObj.price + " bits";
     deleteIcon.style.color = "red";
     deleteIcon.style.cursor = "pointer";
     deleteBtn.addEventListener("click", () => {
         CartLogic.removeAll(itemObj.id);
-        location.reload();
+        window.location.reload();
     });
 
     rowEl.appendChild(col1El);
