@@ -46,12 +46,10 @@ class Card {
         if (!cart) {
             cart = [];
         }
-
         cart.push(itemObj);
 
         localStorage.setItem("cart", JSON.stringify(cart));
     }
-
 }
 
 export default new Card();

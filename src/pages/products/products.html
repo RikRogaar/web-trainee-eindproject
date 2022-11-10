@@ -11,7 +11,6 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"
         defer></script>
         <script src="https://kit.fontawesome.com/acbba302ae.js" crossorigin="anonymous" defer></script>
-        <script type="module" src="./products.js" defer></script>
         <script src="../../../infinite-scroll.pkgd.min.js"></script>
         <link rel="stylesheet" href="../../style.css">
     <title>Shop</title>
@@ -34,7 +33,7 @@
                 </header>
             </div>
             <div class="container mt-5">
-            <section class="padding-y">
+            <main class="padding-y">
 
                   <div class="row position-relative">
                     <aside class="col-lg-3">
@@ -62,7 +61,7 @@
                       <!-- ===== Card for sidebar filter .// ===== -->
                     </aside> <!-- col .// -->
 
-                    <main class="col-lg-9">
+                    <section class="col-lg-9">
 
                       <header class="d-sm-flex align-items-center border-bottom mb-4 pb-3">
                         <strong class="d-block py-2 itemsFound">
@@ -84,13 +83,12 @@
                             <span class="card-total"></span> items
                           </span>
                         </div>
-                    </main> <!-- col .// -->
-                  </div> <!-- row .// -->
-
-                </section>
+                      </section>
+                    </div> <!-- row .// -->
+                  </main> <!-- col .// -->
                 </div> <!-- container .//  -->
         </div>
-
+        <script type="module" src="./products.js"></script>
     </body>
 
 </html>
